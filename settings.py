@@ -11,7 +11,7 @@ ASKBOT_SELF_TEST = False
 ASKBOT_ROOT = os.path.abspath(os.path.dirname(askbot.__file__))
 site.addsitedir(os.path.join(ASKBOT_ROOT, 'deps'))
 
-DEBUG = True#set to True to enable debugging
+DEBUG = False#set to True to enable debugging
 TEMPLATE_DEBUG = False#keep false when debugging jinja2 templates
 INTERNAL_IPS = ('127.0.0.1',)
 ALLOWED_HOSTS = ['*',]#change this for better security on your site
@@ -213,7 +213,7 @@ AUTHENTICATION_BACKENDS = (
 #logging settings
 LOG_FILENAME = 'askbot.log'
 logging.basicConfig(
-    filename=os.path.join('/data/log', LOG_FILENAME),
+    filename=os.path.join('/var/log', LOG_FILENAME),
     level=logging.CRITICAL,
     format='%(pathname)s TIME: %(asctime)s MSG: %(filename)s:%(funcName)s:%(lineno)d %(message)s',
 )

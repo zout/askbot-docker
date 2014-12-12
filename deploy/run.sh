@@ -13,4 +13,4 @@ python /app/manage.py syncdb --noinput
 python /app/manage.py migrate --noinput
 
 # Run via debugging server
-python /app/manage.py runserver 0.0.0.0:80
+exec /usr/local/bin/uwsgi /app/deploy/uwsgi.ini

@@ -2,19 +2,25 @@ FROM ubuntu:trusty
 
 MAINTAINER Joshua Peper <joshua@peperzaken.nl>
 
-RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/sources.list
 RUN apt-get update
-RUN apt-get install -y python-pip 
+RUN apt-get install -y build-essential python python-dev python-pip
 
 RUN easy_install pip
-
-RUN pip install askbot==0.7.49
 
 VOLUME ["/data"]
 
 ADD . /app/
-ADD deploy/run.sh /
-RUN chmod +x run.sh && rm -r /app/deploy
+
+WORKDIR /app
+
+RUN chmod +x deploy/run.sh
+
+RUN pip install -r requirements.txt
+
+RUN chmod +x /app/deploy/bootstrap.sh
+
+RUN	/app/deploy/bootstrap.sh && \
+	python manage.py collectstatic --noinput --ignore /data/
 
 EXPOSE 80
-CMD ["/run.sh"]
+CMD ["/app/deploy/run.sh"]
